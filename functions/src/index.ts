@@ -12,11 +12,9 @@ const app = express();
 const main = express();
 
 main.use('/api/v1', app);
-main.use(cors({
-  origin: [
-    'https://www.enricozammitlonardelli.com',
-    'https://www.ezl.me'
-  ]
+app.use(cors({
+  origin: ['enricozammitlonardelli.com','www.enricozammitlonardelli.com'],
+  methods: 'GET'
 }));
 
 main.use(bodyParser.json());
@@ -63,7 +61,9 @@ app.get('/modules', async (request, response) => {
     moduleQuerySnapshot.forEach(
         (doc) => {
             modules.push({
-                id: doc.id
+                id: doc.id,
+                name: doc.data()['name'],
+                year: doc.data()['year']
             });
         }
     );
